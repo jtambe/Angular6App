@@ -1,13 +1,16 @@
-<form  class="emp-form" #employeeForm="ngForm">
+<form  class="emp-form" #employeeForm="ngForm" (ngSubmit)="onSubmit(employeeForm)" >
   <div class="form-row">
     <div class="form-group col-md-6">        
       <input name="FirstName" class="form-control" #FirstName="ngModel" [(ngModel)]="employeeService.selectedEmployee.FirstName" placeholder="FirstName" required>      
-      <div class="validation-error" *ngIf="FirstName.invalid && FirstName.touched">
+      <div class="validation-error" *ngIf="FirstName.invalid && (FirstName.dirty || FirstName.touched)">
         This field is required
       </div>
     </div>
     <div class="form-group col-md-6">
-        <input name="LastName" class="form-control" #LastName="ngModel" [(ngModel)]="employeeService.selectedEmployee.LastName" placeholder="LastName">
+        <input name="LastName" class="form-control" #LastName="ngModel" [(ngModel)]="employeeService.selectedEmployee.LastName" placeholder="LastName" required>
+        <div class="validation-error" *ngIf="LastName.invalid && (LastName.dirty || LastName.touched)">
+            This field is required
+        </div>
     </div>
   </div>
   <div class="form-group">
@@ -24,7 +27,7 @@
   </div>
   <div class="form-row">
       <div class="form-group col-md-8">        
-        <button type="submit" class="btn btn-lg btn-block btn-info"><i class="fa fa-floppy-o" aria-hidden="true"></i> Submit</button>
+        <button  [disabled]="!employeeForm.valid" type="submit" class="btn btn-lg btn-block btn-info"><i class="fa fa-floppy-o" aria-hidden="true"></i> Submit</button>
       </div>
       <div class="form-group col-md-4">
         <button type="button" class="btn btn-lg btn-block btn-secondary" (click)="resetForm(employeeForm)"><i class="fa fa-repeat" aria-hidden="true"></i> Reset</button>
